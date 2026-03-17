@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.aws_region
+}
+
 resource "aws_vpc" "vpc" {
   cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
@@ -5,8 +9,6 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true
 
 }
-
-
 
 resource "aws_ecs_cluster" "nginx_cluster" {
   name = "${var.environment}-cluster"
@@ -243,7 +245,7 @@ resource "aws_db_instance" "rds" {
   engine_version         = "postgres13"
   instance_class         = "db.t2.micro"
   multi_az               = true
-  db_name                   = "mydb"
+  db_name                = "mydb"
   username               = "username"
   password               = "password"
   skip_final_snapshot    = true
