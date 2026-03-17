@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "nginx_task" {
   memory        = "512"
   task_role_arn = aws_iam_role.ecs_task_role.arn
 
-  execution_role_arn = aws_iam_role.execution_role.arn
+  execution_role_arn = aws_iam_role.ecs_execution_role.arn
 
   container_definitions = jsonencode([{
     name  = "nginx-container"
@@ -97,7 +97,7 @@ resource "aws_subnet" "public-1" {
 
 resource "aws_subnet" "public-2" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.0.0/24"
+  cidr_block              = "10.0.1.0/24"
   availability_zone       = "eu-west-2b"
   map_public_ip_on_launch = true
 
@@ -107,7 +107,7 @@ resource "aws_subnet" "public-2" {
 
 resource "aws_subnet" "web-1" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.2.0/16"
+  cidr_block              = "10.0.2.0/24"
   availability_zone       = "eu-west-2a"
   map_public_ip_on_launch = false
 
@@ -115,7 +115,7 @@ resource "aws_subnet" "web-1" {
 
 resource "aws_subnet" "web-2" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.6.0/24"
+  cidr_block              = "10.0.3.0/24"
   availability_zone       = "eu-west-2b"
   map_public_ip_on_launch = false
 
@@ -210,8 +210,8 @@ resource "aws_nat_gateway" "nat-az-a" {
 }
 
 resource "aws_eip" "nat_a" {
-  vpc = aws_vpc.vpc.id
-
+  #vpc = aws_vpc.vpc.id
+  domain = "vpc"
 }
 
 resource "aws_security_group" "database-sgrp" {
@@ -243,7 +243,7 @@ resource "aws_db_instance" "rds" {
   engine_version         = "postgres13"
   instance_class         = "db.t2.micro"
   multi_az               = true
-  name                   = "mydb"
+  db_name                   = "mydb"
   username               = "username"
   password               = "password"
   skip_final_snapshot    = true
