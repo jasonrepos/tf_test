@@ -193,6 +193,14 @@ resource "aws_security_group" "ecs-sgrp" {
   description = "Allow HTTP inbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
+  ingress {
+    description = "Allow HTTP from ALB"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    self        = true
+  }
+
   egress {
     description = "outbound traffic"
     from_port   = 0
