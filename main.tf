@@ -65,11 +65,17 @@ resource "aws_iam_role" "ecs_execution_role" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "ecs_execution_role_policy" {
+  role       = aws_iam_role.ecs_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
 resource "aws_ecs_service" "nginx_service" {
   name            = "${var.environment}-${var.service}"
   cluster         = aws_ecs_cluster.nginx_cluster.id
   task_definition = aws_ecs_task_definition.nginx_task.arn
   launch_type     = "FARGATE"
+  desired_count   = 1
 
   network_configuration {
     subnets         = [aws_subnet.web-1.id]
@@ -79,7 +85,7 @@ resource "aws_ecs_service" "nginx_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.nginx_target_group.arn
     container_name   = "nginx-container"
-    container_port   = 81
+    container_port   = 80
   }
 
   depends_on = [aws_ecs_task_definition.nginx_task]
@@ -143,7 +149,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   route {
-    cidr_block = "0.0.0.0"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
 
@@ -242,8 +248,8 @@ resource "aws_db_instance" "rds" {
   allocated_storage      = 10
   db_subnet_group_name   = aws_db_subnet_group.subnet_group.id
   engine                 = "postgres"
-  engine_version         = "postgres13"
-  instance_class         = "db.t2.micro"
+  engine_version         = "13.23"
+  instance_class         = "db.t3.micro"
   multi_az               = true
   db_name                = "mydb"
   username               = "username"
