@@ -2,8 +2,8 @@ resource "aws_lb" "nginx_alb" {
   name               = "nginx-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = [aws_subnet.public-1.id, aws_subnet.public-2.id]
-  security_groups    = [aws_security_group.ecs-sgrp.id]
+  subnets            = [module.networking.subnet_ids["public-1"], module.networking.subnet_ids["public-2"]]
+  security_groups    = [module.networking.security_group_ids["ecs"]]
 
   enable_deletion_protection = false
 
@@ -30,7 +30,7 @@ resource "aws_lb_target_group" "nginx_target_group" {
   name     = "nginx-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.vpc.id
+  vpc_id   = module.networking.vpc_id
 
   health_check {
     path = "/"

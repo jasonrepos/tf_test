@@ -2,15 +2,6 @@ variable "environment" {
   description = "The environment name"
 }
 
-variable "service" {
-  description = "The service name"
-}
-
-variable "aws_region" {
-  description = "AWS region"
-  default     = "eu-west-2"
-}
-
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
 }
