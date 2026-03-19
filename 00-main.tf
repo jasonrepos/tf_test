@@ -2,8 +2,8 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "networking" {
-  source = "./modules/networking"
+module "vpc" {
+  source = "./modules/vpc"
 
   environment  = var.environment
   vpc_cidr     = var.vpc_cidr
@@ -80,8 +80,8 @@ resource "aws_ecs_service" "nginx_service" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = [module.networking.subnet_ids["web-1"]]
-    security_groups = [module.networking.security_group_ids["ecs"]]
+    subnets         = [module.vpc.subnet_ids["web-1"]]
+    security_groups = [module.vpc.security_group_ids["ecs"]]
   }
 
   load_balancer {
@@ -104,10 +104,10 @@ resource "aws_db_instance" "rds" {
   username               = "username"
   password               = "password"
   skip_final_snapshot    = true
-  vpc_security_group_ids = [module.networking.security_group_ids["database"]]
+  vpc_security_group_ids = [module.vpc.security_group_ids["database"]]
 }
 
 resource "aws_db_subnet_group" "subnet_group" {
   name       = "main"
-  subnet_ids = [module.networking.subnet_ids["public-1"], module.networking.subnet_ids["public-2"]]
+  subnet_ids = [module.vpc.subnet_ids["public-1"], module.vpc.subnet_ids["public-2"]]
 }

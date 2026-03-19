@@ -5,5 +5,5 @@ output "lb_dns_name" {
 
 # debug subnet IDs
 # output "networking_subnet_ids" {
-#     value = module.networking.subnet_ids
+#     value = module.vpc.subnet_ids
 # }
