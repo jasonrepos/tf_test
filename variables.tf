@@ -11,6 +11,11 @@ variable "aws_region" {
   default     = "eu-west-2"
 }
 
+variable "rds_username" {
+  description = "Master username for the RDS instance"
+  default     = "dbadmin"
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
 }
