@@ -16,6 +16,31 @@ variable "rds_username" {
   default     = "dbadmin"
 }
 
+variable "container_image" {
+  description = "Docker image for the ECS container"
+  type        = string
+}
+
+variable "container_port" {
+  description = "Port the container listens on"
+  type        = number
+}
+
+variable "cpu" {
+  description = "CPU units for the ECS task"
+  type        = string
+}
+
+variable "memory" {
+  description = "Memory (MiB) for the ECS task"
+  type        = string
+}
+
+variable "desired_count" {
+  description = "Number of ECS tasks to run"
+  type        = number
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
 }
