@@ -9,8 +9,8 @@
 crash.log
 
 # Exclude all .tfvars files (may contain secrets)
-*.tfvars
-*.tfvars.json
+# *.tfvars
+# *.tfvars.json
 
 # Ignore plan
 *.tfplan
