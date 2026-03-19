@@ -9,7 +9,7 @@ module "ecs" {
   memory          = var.memory
   desired_count   = var.desired_count
 
-  subnet_ids         = [module.vpc.subnet_ids["web-1"]]
+  subnet_ids         = [module.vpc.subnet_ids["web-1"], module.vpc.subnet_ids["web-2"]]
   security_group_ids = [module.vpc.security_group_ids["ecs"]]
   target_group_arn   = aws_lb_target_group.nginx_target_group.arn
 }
