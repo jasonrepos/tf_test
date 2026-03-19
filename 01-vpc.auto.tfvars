@@ -46,12 +46,12 @@ subnets = {
 }
 
 route_tables = {
-  public  = {
+  public = {
     target = "igw"
-    }
+  }
   private = {
     target = "nat"
-    }
+  }
 }
 
 security_groups = {

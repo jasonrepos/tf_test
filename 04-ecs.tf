@@ -1,8 +1,8 @@
 module "ecs" {
   source = "./modules/ecs"
 
-  environment    = var.environment
-  service        = var.service
+  environment     = var.environment
+  service         = var.service
   container_image = var.container_image
   container_port  = var.container_port
   cpu             = var.cpu

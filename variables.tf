@@ -1,19 +1,23 @@
 variable "environment" {
   description = "The environment name"
+  type        = string
 }
 
 variable "service" {
   description = "The service name"
+  type        = string
 }
 
 variable "aws_region" {
   description = "AWS region"
   default     = "eu-west-2"
+  type        = string
 }
 
 variable "rds_username" {
   description = "Master username for the RDS instance"
   default     = "dbadmin"
+  type        = string
 }
 
 variable "container_image" {
@@ -43,6 +47,7 @@ variable "desired_count" {
 
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
+  type        = string
 }
 
 variable "subnets" {

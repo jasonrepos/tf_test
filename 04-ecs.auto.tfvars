@@ -1,4 +1,4 @@
-service     = "nginx"
+service         = "nginx"
 container_image = "nginx:latest"
 container_port  = 80
 cpu             = "256"
